@@ -3,4 +3,4 @@ CREATE TABLE commits {
 	repo_name,
 	path_to_repo,
 	latest_commit
-}
+};
