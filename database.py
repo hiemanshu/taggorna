@@ -5,8 +5,12 @@ class DBController:
 	def __init__(self, filename):
 		self.db = sqlite3.connect(filename)
 
-	def putNew(self, id, repo_name, path_to_repo, latest_tag, latest_commit, dev_branch, latest_commit_dev):
-		self.db.execute("insert into commits values (?, ?, ?, ?, ?, ?, ?)", (id, repo_name, path_to_repo, latest_tag, latest_commit, dev_branch, latest_commit_dev))
+	def initDB(self):
+		self.db.execute("CREATE TABLE commits (id PRIMARY KEY, repo_name, path_to_repo, latest_tag, latest_commit, dev_branch, latest_commit_dev)")
+		self.db.commit()
+
+	def putNew(self, repo_name, path_to_repo, latest_tag, latest_commit, dev_branch, latest_commit_dev):
+		self.db.execute("insert into commits values (NULL, ?, ?, ?, ?, ?, ?)", (repo_name, path_to_repo, latest_tag, latest_commit, dev_branch, latest_commit_dev))
 		self.db.commit()
 
 	def updateTag(self, repo_name, latest_tag):
