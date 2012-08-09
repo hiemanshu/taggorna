@@ -6,11 +6,11 @@ class DBController:
 		self.db = sqlite3.connect(filename)
 
 	def initDB(self):
-		self.db.execute("CREATE TABLE commits (id PRIMARY KEY, repo_name, path_to_repo, latest_tag, latest_commit, dev_branch, latest_commit_dev)")
+		self.db.execute("CREATE TABLE commits (id PRIMARY KEY, repo_name, path_to_repo, latest_tag, latest_commit, latest_commit_dev)")
 		self.db.commit()
 
-	def putNew(self, repo_name, path_to_repo, latest_tag, latest_commit, dev_branch, latest_commit_dev):
-		self.db.execute("insert into commits values (NULL, ?, ?, ?, ?, ?, ?)", (repo_name, path_to_repo, latest_tag, latest_commit, dev_branch, latest_commit_dev))
+	def putNew(self, repo_name, path_to_repo, latest_tag, latest_commit, latest_commit_dev):
+		self.db.execute("insert into commits values (NULL, ?, ?, ?, ?, ?, ?)", (repo_name, path_to_repo, latest_tag, latest_commit, latest_commit_dev))
 		self.db.commit()
 
 	def updateTag(self, repo_name, latest_tag):
@@ -21,12 +21,8 @@ class DBController:
 		self.db.execute("update commits set latest_commit = ? where repo_name = ?", (latest_commit, repo_name))
 		self.db.commit()
 
-	def updateDev(self, repo_name, dev_branch):
-		self.db.execute("update commits set dev_branch = ? where repo_name = ?", (dev_branch, repo_name))
-		self.db.commit()
-
 	def updateDevCommit(self, repo_name, latest_commit_dev):
-		self.db.execute("update commits set latest_commit_dev = ? where repo_name = ?", (dev_branch, repo_name))
+		self.db.execute("update commits set latest_commit_dev = ? where repo_name = ?", (latest_commit_dev, repo_name))
 		self.db.commit()
 
 	def get(self, id):
